@@ -12,23 +12,18 @@
 
 typedef struct s_cmd
 {
-	int		in_fd;
-	int		out_fd;
-	char	*in_name;
-	char	*out_name;
-	char	*line;
-	char	**args;
-}				t_cmd;
+	struct s_cmd	*prev;
+	char			*cmd;
+	struct s_cmd	*next;
+}			t_cmd;
 
 typedef struct s_shell
 {
-	char	**env;
-	char	**args;
-	t_cmd	*cmd;
-	char	*line;
+	char		**env;
+	char		**args;
+	t_cmd		*cmd;
+	char		*line;
 }				t_shell;
-
-extern t_shell	g_shell;
 
 char	*rl_w_history(char *prompt, char *line_read);
 

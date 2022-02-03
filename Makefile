@@ -3,6 +3,8 @@ NAME = minishell
 CFLAGS = -Wall -Wextra -Werror 
 
 SRC = main.c\
+		trim.c\
+		expand.c\
 		readline.c
 SRCSFD = srcs/
 OBJSFD = objs/

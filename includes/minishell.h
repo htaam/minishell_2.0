@@ -26,5 +26,7 @@ typedef struct s_shell
 }				t_shell;
 
 char	*rl_w_history(char *prompt, char *line_read);
+char	**ft_cmdtrim(char const *s, char *set);
+void	expander(t_cmd *list, char	**a);
 
 #endif

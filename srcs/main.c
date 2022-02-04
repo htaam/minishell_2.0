@@ -45,9 +45,9 @@ int	main(int argc, char **argv, char **envp)
 	cmd_list = malloc(sizeof(t_cmd));
 	expander(cmd_list, a);
 	print_solution_values(cmd_list);
-	ft_clear_cmd(&cmd_list);
-	ft_freecharmatrix(a);
-	free(a);
-	free(line);
+	//ft_clear_cmd(&cmd_list);
+	//ft_freecharmatrix(a);
+	//free(a);
+	//free(line);
 	return (0);
 }

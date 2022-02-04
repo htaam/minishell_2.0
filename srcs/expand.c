@@ -27,46 +27,39 @@ static void	add_last_cmd(t_cmd **stack, char *a)
 	}
 }
 
-static void	do_expand(t_cmd *list)
+static char	*do_expand(char *list)
 {
 	char	*new;
 	char	*temp;
 
-	temp = ft_substr(list->cmd, 1, ft_strlen(list->cmd) - 1);
+	temp = ft_substr(list, 1 + ft_strchr(list, '$') - list, ft_strlen(list));
 	if (getenv(temp))
 	{
-		new = getenv(temp);
-		list->cmd = new;
+		new = ft_substr(list, 0, ft_strchr(list, '$') - list);
+		ft_strlcat(new, getenv(temp), 99999999999);
 	}
 	else if (ft_strncmp(temp, "?", 1) == 0)
-	{
 		new = "Must get last command exit status";
-		list->cmd = new;
-	}
 	else
-		new = "";
-		list->cmd = new;
-}
-
-static void	expander2(t_cmd *list)
-{
-	while (list)
-	{
-		if (ft_strchr((list)->cmd, '$'))
-			do_expand(list);
-		list = (list)->next;
-	}
+		new = ft_substr(list, 0, ft_strchr(list, '$') - list);
+	return (new);
 }
 
 void	expander(t_cmd *list, char	**a)
 {
 	int			i;
+	char		*b;
 
 	i = 0;
 	while (a[i])
 	{
-		add_last_cmd(&list, a[i]);
+		if (ft_strchr(a[i], '$'))
+		{
+			b = do_expand(a[i]);
+			add_last_cmd(&list, b);
+		}
+		else
+			add_last_cmd(&list, a[i]);
 		i++;
 	}
-	expander2(list);
 }

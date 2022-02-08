@@ -22,7 +22,8 @@ void	ft_clear_cmd(t_cmd **stack)
 		(*stack)->prev = NULL;
 		(*stack)->next = NULL;
 		(*stack)->cmd = NULL;
-		free (*stack);
+		if (*stack)
+			free (*stack);
 	}
 }
 

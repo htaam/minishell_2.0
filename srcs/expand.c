@@ -14,8 +14,10 @@ static void	add_last_cmd(t_cmd **stack, char *a)
 		temp->next = NULL;
 		temp->prev = NULL;
 		printf("\n a-> %s\n", a);
-		temp->cmd = ft_strdup("");
-		ft_strlcat(temp->cmd, a, ft_strlen(temp->cmd) + ft_strlen(a) + 1);
+
+		//my ft_strdup must be reviewd
+
+		temp->cmd = ft_strdup(a);
 		*stack = temp;
 		printf("\n cmd-> %s\n", temp->cmd);
 	}

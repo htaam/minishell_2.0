@@ -32,20 +32,22 @@ int	main(int argc, char **argv, char **envp)
 	char		**a;
 	int			i;
 	char		*line;
-	t_cmd		*cmd_list;
 
 	(void)argc;
 	(void)argv;
 	(void)envp;
 	line = 0;
-	i = -1;
+	i = 0;
 	line = rl_w_history("minishell$ ", line);
 	if (ft_strncmp("exit", line, 5) == 0)
 		exit (0);
 	a = ft_cmdtrim(line, " ");
-	cmd_list = malloc(sizeof(t_cmd));
-	expander(cmd_list, a);
-	print_solution_values(cmd_list);
+	expander(a);
+	while (a[i])
+	{
+		printf("%s\n", a[i]);
+		i++;
+	}
 	//ft_clear_cmd(&cmd_list);
 	//ft_freecharmatrix(a);
 	//free(a);

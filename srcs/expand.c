@@ -1,76 +1,74 @@
 #include "minishell.h"
+#include <string.h>
 
-static void	add_last_cmd(t_cmd **stack, char *a)
+/*static void	add_last_cmd(t_cmd **stack, char *a)
 {
 	t_cmd		*temp;
 	static int	first = 1;
 	t_cmd		*temp2;
 
 	temp = *stack;
-	printf("\n a-> %s\n", a);
 	if (first)
 	{
 		first = 0;
 		temp->next = NULL;
 		temp->prev = NULL;
-		printf("\n a-> %s\n", a);
-
 		//my ft_strdup must be reviewd
-
 		temp->cmd = ft_strdup(a);
 		*stack = temp;
-		printf("\n cmd-> %s\n", temp->cmd);
 	}
 	else
 	{
 		while (temp->next)
 			temp = temp->next;
 		temp2 = malloc(sizeof(t_cmd));
+		//my ft_strdup must be reviewd
 		temp2->cmd = ft_strdup(a);
 		temp2->prev = temp;
 		temp2->next = NULL;
 		temp->next = temp2;
-		printf("\n cmd-> %s\n", temp2->cmd);
 	}
-}
+}*/
 
-static char	*do_expand(char *list)
+char	*do_expand(char *list)
 {
 	char	*new;
 	char	*temp;
+	char	*new2;
 
-	temp = ft_substr(list, 1 + ft_strchr(list, '$') - list, ft_strlen(list));
-	if (getenv(temp))
+	if (list[0] == '\"')
+		list[ft_strlen(list) - 1] = '\0';
+	if (list[0] != '\'')
 	{
-		new = ft_substr(list, 0, ft_strchr(list, '$') - list);
-		printf("\nnew -> %s\n", new);
-		printf("\ngetenv -> %s\n", getenv(temp));
-		ft_strlcat(new, getenv(temp), ft_strlen(new) + 1 + ft_strlen(getenv(temp)));
+		temp = ft_substr(list, 1 + ft_strchr(list, '$') - list,
+				ft_strlen(list));
+		if (getenv(temp))
+		{
+			new = ft_substr(list, 0, ft_strchr(list, '$') - list);
+			new2 = ft_strjoin(new, getenv(temp));
+		}
+		else if (ft_strncmp(temp, "?", 1) == 0)
+			new2 = "Must get last command exit status";
+		else
+			new2 = ft_substr(list, 0, ft_strchr(list, '$') - list);
+		if (list[0] == '\"')
+			new2 = ft_strjoin(new2, "\"");
+		return (new2);
 	}
-	else if (ft_strncmp(temp, "?", 1) == 0)
-		new = "Must get last command exit status";
-	else
-		new = ft_substr(list, 0, ft_strchr(list, '$') - list);
-	printf("\nlcat -> %s\n\n", new);
-	return (new);
+	return (list);
 }
 
-void	expander(t_cmd *list, char	**a)
+void	expander(char	**a)
 {
 	int			i;
-	char		*b;
 
 	i = 0;
 	while (a[i])
 	{
 		if (ft_strchr(a[i], '$'))
-		{
-			b = do_expand(a[i]);
-			printf("\nb -> %s\n\n", b);
-			add_last_cmd(&list, b);
-		}
+			a[i] = do_expand(a[i]);
 		else
-			add_last_cmd(&list, a[i]);
+			NULL;
 		i++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: tmatias <tmatias@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/26 18:14:45 by tmatias           #+#    #+#             */
-/*   Updated: 2021/09/29 16:33:29 by tmatias          ###   ########.fr       */
+/*   Updated: 2022/02/11 17:34:40 by tmatias          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void				ft_exit(char *error);
 void				ft_freecharmatrix(char **matrix);
 
 char				*ft_strchr(const char *s, int c);
-char				*ft_strdup(const char *s1);
+char				*ft_strdup(const char *src);
 char				*ft_strnstr(const char *haystack,
 						const char *needle, size_t len);
 char				*ft_strrchr(const char *s, int c);

@@ -30,6 +30,7 @@ void	ft_clear_cmd(t_cmd **stack)
 int	main(int argc, char **argv, char **envp)
 {
 	char		**a;
+	//char		**b;
 	int			i;
 	char		*line;
 
@@ -43,14 +44,15 @@ int	main(int argc, char **argv, char **envp)
 		exit (0);
 	a = ft_cmdtrim(line, " ");
 	expander(a);
+	//b = ft_subsplit(a);
 	while (a[i])
 	{
 		printf("%s\n", a[i]);
 		i++;
 	}
 	//ft_clear_cmd(&cmd_list);
-	//ft_freecharmatrix(a);
-	//free(a);
-	//free(line);
+	ft_freecharmatrix(a);
+	free(a);
+	free(line);
 	return (0);
 }

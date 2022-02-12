@@ -46,6 +46,7 @@ char	*do_expand(char *list)
 		{
 			new = ft_substr(list, 0, ft_strchr(list, '$') - list);
 			new2 = ft_strjoin(new, getenv(temp));
+			free(new);
 		}
 		else if (ft_strncmp(temp, "?", 1) == 0)
 			new2 = "Must get last command exit status";
@@ -53,6 +54,8 @@ char	*do_expand(char *list)
 			new2 = ft_substr(list, 0, ft_strchr(list, '$') - list);
 		if (list[0] == '\"')
 			new2 = ft_strjoin(new2, "\"");
+		free(temp);
+		
 		return (new2);
 	}
 	return (list);
@@ -61,12 +64,17 @@ char	*do_expand(char *list)
 void	expander(char	**a)
 {
 	int			i;
-
+	char		*temp;
 	i = 0;
 	while (a[i])
 	{
 		if (ft_strchr(a[i], '$'))
-			a[i] = do_expand(a[i]);
+		{
+			temp = do_expand(a[i]);
+			free(a[i]);
+			a[i] = ft_strdup(temp);
+			free(temp);
+		}
 		else
 			NULL;
 		i++;

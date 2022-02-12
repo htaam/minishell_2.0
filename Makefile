@@ -5,6 +5,7 @@ CFLAGS = -Wall -Wextra -Werror
 SRC = main.c\
 		trim.c\
 		expand.c\
+		subsplit.c\
 		readline.c
 SRCSFD = srcs/
 OBJSFD = objs/

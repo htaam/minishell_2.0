@@ -6,6 +6,8 @@ SRC = main.c\
 		trim.c\
 		expand.c\
 		subsplit.c\
+		remove_quotes.c\
+		parser.c\
 		readline.c
 SRCSFD = srcs/
 OBJSFD = objs/

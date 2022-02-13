@@ -5,7 +5,9 @@ int	main(int argc, char **argv, char **envp)
 	char		**a;
 	int			i;
 	char		*line;
+	t_node		*nodes;
 
+	nodes = NULL;
 	(void)argc;
 	(void)argv;
 	(void)envp;
@@ -17,6 +19,8 @@ int	main(int argc, char **argv, char **envp)
 	a = ft_cmdtrim(line, " ");
 	a = ft_subsplit(a);
 	expander(a);
+	remove_quotes(a);
+	nodes = parse(a);
 	while (a[i])
 	{
 		printf("%s\n", a[i]);
@@ -26,4 +30,5 @@ int	main(int argc, char **argv, char **envp)
 	free(a);
 	free(line);
 	return (0);
+
 }

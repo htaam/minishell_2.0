@@ -6,7 +6,7 @@
 /*   By: tmatias <tmatias@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/28 17:19:18 by tmatias           #+#    #+#             */
-/*   Updated: 2021/07/28 17:25:05 by tmatias          ###   ########.fr       */
+/*   Updated: 2022/02/13 12:35:09 by tmatias          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,23 @@ int	ft_charmatrixlen(char **matrix)
 	while (matrix[i])
 		i++;
 	return (i);
+}
+
+void	ft_free_matrix(char ***m)
+{
+	int	i;
+
+	i = 0;
+	while (m && m[0] && m[0][i])
+	{
+		free(m[0][i]);
+		i++;
+	}
+	if (m)
+	{
+		free(m[0]);
+		*m = NULL;
+	}
 }
 
 void	ft_freecharmatrix(char **matrix)

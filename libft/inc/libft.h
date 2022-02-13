@@ -6,7 +6,7 @@
 /*   By: tmatias <tmatias@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/26 18:14:45 by tmatias           #+#    #+#             */
-/*   Updated: 2022/02/11 17:34:40 by tmatias          ###   ########.fr       */
+/*   Updated: 2022/02/13 12:35:22 by tmatias          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ void				*ft_memmove(void *dst, const void *src, size_t len);
 void				*ft_memset(void *b, int c, size_t len);
 void				ft_exit(char *error);
 void				ft_freecharmatrix(char **matrix);
+void				ft_free_matrix(char ***m);
 
 char				*ft_strchr(const char *s, int c);
 char				*ft_strdup(const char *src);

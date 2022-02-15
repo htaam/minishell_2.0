@@ -24,17 +24,33 @@ int	count_pipes(char	**a)
 	}
 	return (n);
 }
+
 void	fill_nodes(t_node	*nodes, char **a)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
+	int		k;
 
 	i = 0;
 	j = i;
+	k = j;
+	nodes[j].cmd = ft_strdup(a[i]);
 	while (a[i])
 	{
-		
+		printf("->%s\n", nodes[j].cmd);
+		if (ft_strlen(a[i]) == 1 && a[i][0] == '|' && i != 0)
+		{
+			j++;
+			i++;
+			k = 0;
+			nodes[j].cmd = ft_strdup(a[i]);
+		}
+		nodes[j].in_file = 0;
+		nodes[j].out_file = 1;
+		nodes[j].arg = NULL;
+		matrix_replace_i(&nodes[j].arg, &a[i], k + 1);
 		i++;
+		k++;
 	}
 }
 
@@ -42,8 +58,7 @@ t_node	*parse(char	**a)
 {
 	t_node	*nodes;
 	int		num_pipes;
-	int		i;
-	nodes = NULL;
+
 	num_pipes = count_pipes(a);
 	nodes = malloc((num_pipes + 1) * sizeof(t_node));
 	fill_nodes(nodes, a);

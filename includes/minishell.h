@@ -39,5 +39,6 @@ void	expander(char	**a);
 char	**ft_subsplit(char	**a);
 void	remove_quotes(char	**a);
 t_node	*parse(char	**a);
+char	**matrix_replace_i(char ***big, char **small, int n);
 
 #endif

@@ -6,6 +6,7 @@ int	main(int argc, char **argv, char **envp)
 	int			i;
 	char		*line;
 	t_node		*nodes;
+	int			j;
 
 	nodes = NULL;
 	(void)argc;
@@ -20,15 +21,26 @@ int	main(int argc, char **argv, char **envp)
 	a = ft_subsplit(a);
 	expander(a);
 	remove_quotes(a);
-	nodes = parse(a);
 	while (a[i])
 	{
 		printf("%s\n", a[i]);
+		i++;
+	}
+	nodes = parse(a);
+	i = 0;
+	while (nodes[i].in_file == 1)
+	{
+		j = 0;
+		printf("nodes[%d]\nCMD = %s\n", i, nodes[i].cmd);
+		while (nodes[i].arg[j])
+		{
+			printf("arg[%d] = %s\n", j, nodes[i].arg[j]);
+			j++;
+		}
 		i++;
 	}
 	ft_freecharmatrix(a);
 	free(a);
 	free(line);
 	return (0);
-
 }

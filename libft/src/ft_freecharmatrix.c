@@ -6,7 +6,7 @@
 /*   By: tmatias <tmatias@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/28 17:19:18 by tmatias           #+#    #+#             */
-/*   Updated: 2022/02/13 12:35:09 by tmatias          ###   ########.fr       */
+/*   Updated: 2022/02/17 14:45:34 by tmatias          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	ft_charmatrixlen(char **matrix)
 	int	i;
 
 	i = 0;
-	while (matrix[i])
+	while (matrix && matrix[i])
 		i++;
 	return (i);
 }

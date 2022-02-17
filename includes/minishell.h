@@ -10,18 +10,10 @@
 # include <readline/history.h>
 # include "libft.h"
 
-typedef struct s_cmd
-{
-	struct s_cmd	*prev;
-	char			*cmd;
-	struct s_cmd	*next;
-}			t_cmd;
-
 typedef struct s_shell
 {
 	char		**env;
 	char		**args;
-	t_cmd		*cmd;
 	char		*line;
 }				t_shell;
 
@@ -33,12 +25,19 @@ typedef struct s_node
 	int		out_file;
 }	t_node;
 
-char	*rl_w_history(char *prompt, char *line_read);
-char	**ft_cmdtrim(char const *s, char *set);
-void	expander(char	**a);
-char	**ft_subsplit(char	**a);
-void	remove_quotes(char	**a);
-t_node	*parse(char	**a);
-char	**matrix_replace_i(char ***big, char **small, int n);
+typedef struct s_nodelist
+{
+	t_node				node;
+	struct s_nodelist	*next;
+}			t_nodelist;
+
+char		*rl_w_history(char *prompt, char *line_read);
+char		**ft_cmdtrim(char const *s, char *set);
+void		expander(char	**a);
+char		**ft_subsplit(char	**a);
+void		remove_quotes(char	**a);
+t_node		**parse(char	**a);
+char		**matrix_replace_i(char ***big, char **small, int n);
+int			count_pipes(char	**a);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: tmatias <tmatias@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/26 18:14:45 by tmatias           #+#    #+#             */
-/*   Updated: 2022/02/13 12:35:22 by tmatias          ###   ########.fr       */
+/*   Updated: 2022/02/17 14:05:58 by tmatias          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ int					ft_gnl(int fd, char **line);
 int					ft_string_is_positive_number(char *str);
 int					ft_charmatrixlen(char **matrix);
 int					ft_char_count(char *str, char c);
+int					ft_charmatrixlen(char **matrix);
 
 void				ft_bzero(void *s, size_t n);
 void				*ft_calloc(size_t count, size_t size);

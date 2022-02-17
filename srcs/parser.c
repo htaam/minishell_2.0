@@ -25,43 +25,81 @@ int	count_pipes(char	**a)
 	return (n);
 }
 
-void	fill_nodes(t_node	*nodes, char **a)
+char	**ft_extend_matrix(char **in, char *newstr)
 {
+	char	**out;
+	int		len;
 	int		i;
-	int		j;
-	int		k;
 
-	i = 0;
-	j = i;
-	k = j;
-	nodes[j].cmd = ft_strdup(a[i]);
-	while (a[i])
+	i = -1;
+	out = NULL;
+	if (!newstr)
+		return (in);
+	len = ft_charmatrixlen(in);
+	out = malloc(sizeof(char *) * (len + 2));
+	out[len + 1] = NULL;
+	if (!out)
+		return (in);
+	while (++i < len)
 	{
-		printf("->%s\n", nodes[j].cmd);
-		if (ft_strlen(a[i]) == 1 && a[i][0] == '|' && i != 0)
+		out[i] = ft_strdup(in[i]);
+		if (!out[i])
 		{
-			j++;
-			i++;
-			k = 0;
-			nodes[j].cmd = ft_strdup(a[i]);
+			ft_free_matrix(&in);
+			ft_free_matrix(&out);
 		}
-		nodes[j].in_file = 0;
-		nodes[j].out_file = 1;
-		nodes[j].arg = NULL;
-		matrix_replace_i(&nodes[j].arg, &a[i], k + 1);
-		i++;
-		k++;
 	}
+	out[i] = ft_strdup(newstr);
+	ft_free_matrix(&in);
+	return (out);
 }
 
-t_node	*parse(char	**a)
+t_node	*make_node(char **a)
 {
-	t_node	*nodes;
-	int		num_pipes;
+	int			i;
+	t_node		*node;
 
+	i = 0;
+	node = malloc (sizeof(t_node));
+	(*node).arg = NULL;
+	(*node).cmd = ft_strdup(a[i]);
+	(*node).in_file = 0;
+	(*node).out_file = 1;
+	while (a[i])
+	{
+		if (ft_strlen(a[i]) == 1 && a[i][0] == '|')
+			break ;
+		(*node).arg = ft_extend_matrix((*node).arg, a[i]);
+		i++;
+	}
+	return (node);
+}
+
+t_node	**parse(char	**a)
+{
+	t_node		**node;
+	int			num_pipes;
+	int			i;
+	int			j;
+
+	i = 0;
+	j = 0;
 	num_pipes = count_pipes(a);
-	nodes = malloc((num_pipes + 1) * sizeof(t_node));
-	fill_nodes(nodes, a);
-	printf("number of pipes = %d\n", num_pipes);
-	return (nodes);
+	node = malloc(sizeof(t_node) * (num_pipes + 1));
+	while (a[i])
+	{
+		if (i == 0 && a[i][0] != '|')
+		{
+			node[0] = make_node(&a[i]);
+			j++;
+		}
+		if (ft_strlen(a[i]) == 1
+			&& a[i][0] == '|' && i != 0 && a[i + 1] != NULL)
+		{
+			node[j] = make_node(&a[i + 1]);
+			j++;
+		}
+		i++;
+	}
+	return (node);
 }

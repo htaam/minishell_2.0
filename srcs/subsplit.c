@@ -29,7 +29,6 @@ static int	count_words(char *str, char *set, int count)
 	return (count);
 }
 
-
 static char	**fill_array(char **aux, char *str, char *set, int i[3])
 {
 	int		q[2];

@@ -3,7 +3,7 @@
 void	print_node(t_node **nodes, char **a)
 {
 	int	i;
-	int j;
+	int	j;
 
 	i = 0;
 	while (i <= count_pipes(a))
@@ -11,7 +11,6 @@ void	print_node(t_node **nodes, char **a)
 		printf("cmd[%d] > %s\n", i, nodes[i]->cmd);
 		printf("in_file[%d] > %d\n", i, nodes[i]->in_file);
 		printf("out_file[%d] > %d\n", i, nodes[i]->out_file);
-		
 		j = 0;
 		while ((nodes[i]->arg[j]))
 		{
@@ -42,7 +41,7 @@ int	main(int argc, char **argv, char **envp)
 	expander(a);
 	remove_quotes(a);
 	nodes = parse(a);
-	print_node(nodes,a);
+	print_node(nodes, a);
 	printf("end\n");
 	ft_freecharmatrix(a);
 	free(a);

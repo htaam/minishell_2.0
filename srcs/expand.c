@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void	do_expland_aux(char	**str)
+void	do_expand_aux(char	**str)
 {
 	char	*temp;
 
@@ -32,7 +32,7 @@ char	*do_expand(char *list)
 		new2 = ft_substr(list, 0, ft_strchr(list, '$') - list);
 	if (list[0] == '\"')
 	{
-		do_expland_aux(&new2);
+		do_expand_aux(&new2);
 	}
 	free(temp);
 	return (new2);

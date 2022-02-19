@@ -22,6 +22,21 @@ void	print_node(t_node **nodes, char **a)
 	}
 }
 
+void	free_nodes(t_node **node, int size)
+{
+	int	i;
+
+	i = 0;
+	while (i <= size)
+	{
+		ft_free_matrix(&node[i]->arg);
+		free(node[i]->cmd);
+		free(node[i]);
+		i++;
+	}
+	free(node);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	char		**a;
@@ -43,6 +58,7 @@ int	main(int argc, char **argv, char **envp)
 	nodes = parse(a);
 	print_node(nodes, a);
 	printf("end\n");
+	free_nodes(nodes, count_pipes(a));
 	ft_freecharmatrix(a);
 	free(a);
 	free(line);

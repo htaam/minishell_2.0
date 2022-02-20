@@ -39,5 +39,6 @@ void		remove_quotes(char	**a);
 t_node		**parse(char	**a);
 char		**matrix_replace_i(char ***big, char **small, int n);
 int			count_pipes(char	**a);
+void		executor(t_node **nodes, int n_nodes);
 
 #endif

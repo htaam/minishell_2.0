@@ -42,6 +42,7 @@ int	main(int argc, char **argv, char **envp)
 	char		**a;
 	char		*line;
 	t_node		**nodes;
+	int			n_nodes;
 
 	nodes = NULL;
 	(void)argc;
@@ -56,7 +57,10 @@ int	main(int argc, char **argv, char **envp)
 	expander(a);
 	remove_quotes(a);
 	nodes = parse(a);
-	print_node(nodes, a);
+	n_nodes = count_pipes(a) + 1;
+	executor(nodes, n_nodes);
+
+	//print_node(nodes, a);
 	printf("end\n");
 	free_nodes(nodes, count_pipes(a));
 	ft_freecharmatrix(a);

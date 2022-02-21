@@ -1,6 +1,5 @@
 #include "minishell.h"
 
-// "<|>"
 static int	count_words(char *str, char *set, int count)
 {
 	int		q[2];

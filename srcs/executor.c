@@ -3,17 +3,45 @@
 void	executor_2(t_node *node, int i, int **fd, int n_nodes)
 {
 	(void)node;
-	printf("1 CHILD %d\n", i);
-	if (i < n_nodes && n_nodes > 1)
+	if (i < n_nodes - 1 && n_nodes > 1)
 		dup2(fd[i][1], 1);
-	printf("2 CHILD %d\n", i);
 	if (i > 0)
 		dup2(fd[i - 1][0], 0);
-	if (i == n_nodes)
-		dup2(1,1);
-	printf("3 CHILD %d\n", i);
+	if (0 == ft_strcmp(node->cmd, "echo")
+		;//run echo
+	else if (0 == ft_strcmp(node->cmd, "export"
+		;//run export
+	else if (0 == ft_strcmp(node->cmd, "unset"
+		;//run unset
+	else if (0 == ft_strcmp(node->cmd, "cd"
+		;//run cd
+	else if (0 == ft_strcmp(node->cmd, "exit"
+		;//run exit
+	else if (0 == ft_strcmp(node->cmd, "pwd"
+		;//run pwd
+	else if (0 == ft_strcmp(node->cmd, "env"
+		;//run env
+	else
+		;//run execve
 }
 
+void	close_pipes(int **fd, int n_nodes)
+{
+	int		i;
+
+	i = 0;
+	if (n_nodes > 1)
+	{
+		while (i < n_nodes)
+		{
+			close(fd[i][0]);
+			close(fd[i][1]);
+			free(fd[i]);
+			i++;
+		}
+		free(fd);
+	}
+}
 void	executor(t_node **nodes, int n_nodes)
 {
 	int		i;
@@ -28,14 +56,12 @@ void	executor(t_node **nodes, int n_nodes)
 		{
 			fd[i] = malloc (sizeof(int) * 2);
 			pipe(fd[i]);
-			printf("\n\ni = %d, fd[0] = %d  fd[1] = %d\n\n", i, fd[i][0], fd[i][1]);
 			i++;
 		}
 	}
 	i = 0;
 	while (i < n_nodes)
 	{
-		printf("AQUI %d\n", i);
 		pid = fork();
 		if (pid == 0)
 		{
@@ -46,4 +72,5 @@ void	executor(t_node **nodes, int n_nodes)
 			wait(NULL);
 		i++;
 	}
+	close_pipes(fd, n_nodes);
 }

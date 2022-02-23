@@ -94,7 +94,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	init_env(envp);
-	while (g_shell.exit = 0)
+	while (g_shell.exit == 0)
 	{
 		line = 0;
 		pid = fork();
@@ -117,7 +117,6 @@ int	main(int argc, char **argv, char **envp)
 		}
 		else
 			waitpid(pid, NULL, 0);
-		i++;
 	}
 	return (0);
 }

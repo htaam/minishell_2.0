@@ -8,21 +8,21 @@ void	executor_2(t_node *node, int i, int **fd, int n_nodes)
 	if (i > 0)
 		dup2(fd[i - 1][0], 0);
 	if (0 == ft_strncmp(node->cmd, "echo", 4))
-		printf("ECHO\n");
+		printf("do ECHO\n");
 	else if (0 == ft_strncmp(node->cmd, "export", 6))
-		printf("export\n");
+		printf("do export\n");
 	else if (0 == ft_strncmp(node->cmd, "unset", 5))
-		printf("unset\n");
+		printf("do unset\n");
 	else if (0 == ft_strncmp(node->cmd, "cd", 2))
-		printf("cd\n");
+		printf("do cd\n");
 	else if (0 == ft_strncmp(node->cmd, "exit", 4))
-		printf("exit\n");
+		g_shell.exit = 1;
 	else if (0 == ft_strncmp(node->cmd, "pwd", 3))
-		printf("pwd\n");
+		printf("do pwd\n");
 	else if (0 == ft_strncmp(node->cmd, "env", 3))
-		printf("env\n");
+		printf("do env\n");
 	else
-		printf("exeve\n");
+		do_exeve(node->cmd, node->arg);
 }
 
 void	close_pipes(int **fd, int n_nodes)

@@ -9,6 +9,7 @@ SRC = main.c\
 		remove_quotes.c\
 		parser.c\
 		executor.c\
+		exeve.c\
 		readline.c
 SRCSFD = srcs/
 OBJSFD = objs/

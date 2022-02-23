@@ -33,6 +33,8 @@ typedef struct s_nodelist
 	struct s_nodelist	*next;
 }			t_nodelist;
 
+extern t_shell g_shell;
+
 char		*rl_w_history(char *prompt, char *line_read);
 char		**ft_cmdtrim(char const *s, char *set);
 void		expander(char	**a);
@@ -42,5 +44,6 @@ t_node		**parse(char	**a);
 char		**matrix_replace_i(char ***big, char **small, int n);
 int			count_pipes(char	**a);
 void		executor(t_node **nodes, int n_nodes);
+void		do_exeve(char	*cmd, char	**arg);
 
 #endif

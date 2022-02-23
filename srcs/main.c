@@ -43,28 +43,37 @@ int	main(int argc, char **argv, char **envp)
 	char		*line;
 	t_node		**nodes;
 	int			n_nodes;
+	pid_t		pid;
 
 	nodes = NULL;
 	(void)argc;
 	(void)argv;
 	(void)envp;
-	line = 0;
-	line = rl_w_history("minishell$ ", line);
-	if (ft_strncmp("exit", line, 5) == 0)
-		exit (0);
-	a = ft_cmdtrim(line, " ");
-	a = ft_subsplit(a);
-	expander(a);
-	remove_quotes(a);
-	nodes = parse(a);
-	n_nodes = count_pipes(a) + 1;
-	executor(nodes, n_nodes);
-
-	//print_node(nodes, a);
-	printf("end\n");
-	free_nodes(nodes, count_pipes(a));
-	ft_freecharmatrix(a);
-	free(a);
-	free(line);
+	int i = 0;
+	while (i < 3)
+	{
+		line = 0;
+		pid = fork();
+		if (pid == 0)
+		{
+			line = rl_w_history("minishell$ ", line);
+			a = ft_cmdtrim(line, " ");
+			a = ft_subsplit(a);
+			expander(a);
+			remove_quotes(a);
+			nodes = parse(a);
+			n_nodes = count_pipes(a) + 1;
+			executor(nodes, n_nodes);
+			printf("ola\n");
+			free_nodes(nodes, count_pipes(a));
+			ft_freecharmatrix(a);
+			free(a);
+			free(line);
+			return (0);
+		}
+		else
+			waitpid(pid, NULL, 0);
+		i++;
+	}
 	return (0);
 }

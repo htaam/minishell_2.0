@@ -15,6 +15,8 @@ typedef struct s_shell
 	char		**env;
 	char		**args;
 	char		*line;
+	int			exit;
+	int			exit_status;
 }				t_shell;
 
 typedef struct s_node

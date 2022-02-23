@@ -7,22 +7,22 @@ void	executor_2(t_node *node, int i, int **fd, int n_nodes)
 		dup2(fd[i][1], 1);
 	if (i > 0)
 		dup2(fd[i - 1][0], 0);
-	if (0 == ft_strcmp(node->cmd, "echo")
-		;//run echo
-	else if (0 == ft_strcmp(node->cmd, "export"
-		;//run export
-	else if (0 == ft_strcmp(node->cmd, "unset"
-		;//run unset
-	else if (0 == ft_strcmp(node->cmd, "cd"
-		;//run cd
-	else if (0 == ft_strcmp(node->cmd, "exit"
-		;//run exit
-	else if (0 == ft_strcmp(node->cmd, "pwd"
-		;//run pwd
-	else if (0 == ft_strcmp(node->cmd, "env"
-		;//run env
+	if (0 == ft_strncmp(node->cmd, "echo", 4))
+		printf("ECHO\n");
+	else if (0 == ft_strncmp(node->cmd, "export", 6))
+		printf("export\n");
+	else if (0 == ft_strncmp(node->cmd, "unset", 5))
+		printf("unset\n");
+	else if (0 == ft_strncmp(node->cmd, "cd", 2))
+		printf("cd\n");
+	else if (0 == ft_strncmp(node->cmd, "exit", 4))
+		printf("exit\n");
+	else if (0 == ft_strncmp(node->cmd, "pwd", 3))
+		printf("pwd\n");
+	else if (0 == ft_strncmp(node->cmd, "env", 3))
+		printf("env\n");
 	else
-		;//run execve
+		printf("exeve\n");
 }
 
 void	close_pipes(int **fd, int n_nodes)

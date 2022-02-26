@@ -7,7 +7,7 @@ void	executor_2(t_node *node, int i, int **fd, int n_nodes)
 		dup2(fd[i][1], 1);
 	if (i > 0)
 		dup2(fd[i - 1][0], 0);
-	if (0 == ft_strncmp(node->cmd, "echo", 4))
+	/*if (0 == ft_strncmp(node->cmd, "echo", 4))
 		printf("do ECHO\n");
 	else if (0 == ft_strncmp(node->cmd, "export", 6))
 		printf("do export\n");
@@ -21,7 +21,7 @@ void	executor_2(t_node *node, int i, int **fd, int n_nodes)
 		printf("do pwd\n");
 	else if (0 == ft_strncmp(node->cmd, "env", 3))
 		printf("do env\n");
-	else
+	else*/
 		do_exeve(node->cmd, node->arg);
 }
 
@@ -42,6 +42,7 @@ void	close_pipes(int **fd, int n_nodes)
 		free(fd);
 	}
 }
+
 void	executor(t_node **nodes, int n_nodes)
 {
 	int		i;

@@ -43,7 +43,6 @@ void	init_env(char **envp)
 	g_shell.env[i] = NULL;
 }
 
-
 void	print_node(t_node **nodes, char **a)
 {
 	int	i;
@@ -87,7 +86,6 @@ int	main(int argc, char **argv, char **envp)
 	char		*line;
 	t_node		**nodes;
 	int			n_nodes;
-	pid_t		pid;
 
 	g_shell.exit = 0;
 	nodes = NULL;
@@ -97,26 +95,18 @@ int	main(int argc, char **argv, char **envp)
 	while (g_shell.exit == 0)
 	{
 		line = 0;
-		pid = fork();
-		if (pid == 0)
-		{
-			line = rl_w_history("minishell$ ", line);
-			a = ft_cmdtrim(line, " ");
-			a = ft_subsplit(a);
-			expander(a);
-			remove_quotes(a);
-			nodes = parse(a);
-			n_nodes = count_pipes(a) + 1;
-			executor(nodes, n_nodes);
-			printf("ola\n");
-			free_nodes(nodes, count_pipes(a));
-			ft_freecharmatrix(a);
-			free(a);
-			free(line);
-			return (0);
-		}
-		else
-			waitpid(pid, NULL, 0);
+		line = rl_w_history("Prompt minishell$ ", line);
+		a = ft_cmdtrim(line, " ");
+		a = ft_subsplit(a);
+		expander(a);
+		remove_quotes(a);
+		nodes = parse(a);
+		n_nodes = count_pipes(a) + 1;
+		executor(nodes, n_nodes);
+		free_nodes(nodes, count_pipes(a));
+		ft_freecharmatrix(a);
+		free(a);
+		free(line);
 	}
 	return (0);
 }

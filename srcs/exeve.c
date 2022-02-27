@@ -17,7 +17,8 @@ void	ft_testpaths(char *cmd, char **args, char **paths)
 		i++;
 	}
 	ft_freecharmatrix(paths);
-	printf("No such command found.");
+	printf("No such command found.\n");
+	exit((0));
 }
 
 void	ft_exec(char *cmd, char **args)
@@ -33,6 +34,7 @@ void	ft_exec(char *cmd, char **args)
 		{
 			g_shell.env[i] += 5;
 			paths = ft_split(g_shell.env[i], ':');
+			g_shell.env[i] -= 5;
 			break ;
 		}
 		i++;
@@ -42,11 +44,19 @@ void	ft_exec(char *cmd, char **args)
 
 void	do_exeve(char	*cmd, char	**arg)
 {
-	if (cmd[0] == '/')
+	pid_t pid;
+
+	pid = fork();
+	if (pid == 0)
 	{
-		if (execve(cmd, arg, g_shell.env) == -1)
-			printf("Invalid command address.");
+		if (cmd[0] == '/')
+		{
+			if (execve(cmd, arg, g_shell.env) == -1)
+				printf("Invalid command address.");
+		}
+		else
+			ft_exec(cmd, arg);
 	}
 	else
-		ft_exec(cmd, arg);
+		waitpid(pid,NULL,0);
 }

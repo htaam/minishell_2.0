@@ -2,6 +2,10 @@
 
 void	executor_2(t_node *node, int i, int **fd, int n_nodes)
 {
+	int		og_one;
+	int		og_zero;
+	og_one = dup(1);
+	og_zero = dup(0);
 	(void)node;
 	if (i < n_nodes - 1 && n_nodes > 1)
 		dup2(fd[i][1], 1);
@@ -22,7 +26,9 @@ void	executor_2(t_node *node, int i, int **fd, int n_nodes)
 	else if (0 == ft_strncmp(node->cmd, "env", 3))
 		printf("do env\n");
 	else*/
-		do_exeve(node->cmd, node->arg);
+	do_exeve(node->cmd, node->arg);
+	dup2(og_zero, 0);
+	dup2(og_one,1);
 }
 
 void	close_pipes(int **fd, int n_nodes)
@@ -47,7 +53,6 @@ void	executor(t_node **nodes, int n_nodes)
 {
 	int		i;
 	int		**fd;
-	pid_t	pid;
 
 	i = 0;
 	if (n_nodes > 1)
@@ -63,14 +68,7 @@ void	executor(t_node **nodes, int n_nodes)
 	i = 0;
 	while (i < n_nodes)
 	{
-		pid = fork();
-		if (pid == 0)
-		{
-			executor_2(nodes[i], i, fd, n_nodes);
-			exit(0);
-		}
-		else
-			wait(NULL);
+		executor_2(nodes[i], i, fd, n_nodes);
 		i++;
 	}
 	close_pipes(fd, n_nodes);

@@ -12,6 +12,7 @@ void	test_relative_paths(char *cmd, char **args)
 	new_path = ft_strjoin(temp, cmd);
 	execve(new_path, args, g_shell.env);
 	ft_putstr_fd("Command not found\n", 1);
+	g_shell.exit_status = 1;
 }
 
 void	ft_testpaths(char *cmd, char **args, char **paths)

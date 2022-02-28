@@ -106,9 +106,10 @@ int	is_line_empty(char	*line)
 {
 	int	a;
 	a = 0;
+
 	while(line[a])
 	{
-		if (line[a] != ' ')
+		if (line[a]!= ' ')
 			return(0);
 		a++;
 	}

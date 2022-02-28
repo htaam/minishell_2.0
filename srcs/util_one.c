@@ -1,5 +1,5 @@
 #include "minishell.h"
-
+/*
 static int	calcds(char **str)
 {
 	int	i;
@@ -43,3 +43,4 @@ char	*convertocd(char **str)
 	path[l] = 0;
 	return (path);
 }
+*/

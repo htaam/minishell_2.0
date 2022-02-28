@@ -10,6 +10,17 @@ void	do_expand_aux(char	**str)
 	free(temp);
 }
 
+char	*do_expand_aux_2(char *list)
+{
+	char	*temp;
+	char	*new;
+
+	temp = ft_substr(list, 0, ft_strchr(list, '$') - list);
+	new = ft_strjoin(temp, ft_itoa(g_shell.exit_status));
+	free(temp);
+	return (new);
+}
+
 char	*do_expand(char *list)
 {
 	char	*new;
@@ -27,7 +38,7 @@ char	*do_expand(char *list)
 		free(new);
 	}
 	else if (ft_strncmp(temp, "?", 1) == 0)
-		new2 = "Must get last command exit status";
+		new2 = do_expand_aux_2(list);
 	else
 		new2 = ft_substr(list, 0, ft_strchr(list, '$') - list);
 	if (list[0] == '\"')

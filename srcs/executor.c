@@ -1,5 +1,39 @@
 #include "minishell.h"
 
+int		check_builtin(char	*cmd)
+{
+	if (0 == ft_strncmp(cmd, "echo", 4))
+		return (1);
+	else if (0 == ft_strncmp(cmd, "export", 6))
+		return (1);
+	else if (0 == ft_strncmp(cmd, "unset", 5))
+		return (1);
+	else if (0 == ft_strncmp(cmd, "cd", 2))
+		return (1);
+	else if (0 == ft_strncmp(cmd, "pwd", 3))
+		return (1);
+	else if (0 == ft_strncmp(cmd, "env", 3))
+		return (1);
+	else
+		return (0);
+}
+
+void	do_builtin(char *cmd)
+{
+	if (0 == ft_strncmp(cmd, "echo", 4))
+		printf("do ECHO\n");
+	else if (0 == ft_strncmp(cmd, "export", 6))
+		printf("do export\n");
+	else if (0 == ft_strncmp(cmd, "unset", 5))
+		printf("do unset\n");
+	else if (0 == ft_strncmp(cmd, "cd", 2))
+		printf("do cd\n");
+	else if (0 == ft_strncmp(cmd, "pwd", 3))
+		printf("do pwd\n");
+	else if (0 == ft_strncmp(cmd, "env", 3))
+		printf("do env\n");
+}
+
 void	executor_2(t_node *node, int i, int **fd, int n_nodes)
 {
 	int		og_one;
@@ -8,7 +42,6 @@ void	executor_2(t_node *node, int i, int **fd, int n_nodes)
 
 	info[0] = i;
 	info[1] = n_nodes;
-
 	og_one = dup(1);
 	og_zero = dup(0);
 	(void)node;
@@ -19,23 +52,10 @@ void	executor_2(t_node *node, int i, int **fd, int n_nodes)
 		dup2(fd[i - 1][0], 0);
 		close(fd[i - 1][1]);
 	}
-	/*if (0 == ft_strncmp(node->cmd, "echo", 4))
-		printf("do ECHO\n");
-	else if (0 == ft_strncmp(node->cmd, "export", 6))
-		printf("do export\n");
-	else if (0 == ft_strncmp(node->cmd, "unset", 5))
-		printf("do unset\n");
-	else if (0 == ft_strncmp(node->cmd, "cd", 2))
-		printf("do cd\n");
-	else if (0 == ft_strncmp(node->cmd, "exit", 4))
-		g_shell.exit = 1;
-	else if (0 == ft_strncmp(node->cmd, "pwd", 3))
-		printf("do pwd\n");
-	else if (0 == ft_strncmp(node->cmd, "env", 3))
-		printf("do env\n");
-	else*/
 	if (0 == ft_strncmp(node->cmd, "exit", 4))
 		g_shell.exit = 1;
+	else if (check_builtin(node->cmd) == 1)
+		do_builtin(node->cmd);
 	else
 		do_exeve(node->cmd, node->arg, fd, info);
 	dup2(og_zero, 0);
@@ -65,6 +85,7 @@ void	executor(t_node **nodes, int n_nodes)
 	int		i;
 	int		**fd;
 
+	g_shell.exit_status = 0;
 	i = 0;
 	if (n_nodes > 1)
 	{

@@ -1,5 +1,19 @@
 #include "minishell.h"
 
+void	test_relative_paths(char *cmd, char **args)
+{
+	char	*temp;
+	char	*new_path;
+
+	temp = getenv("PWD");
+	new_path = ft_strjoin(temp, cmd + 1);
+	execve(new_path, args, g_shell.env);
+	temp = getenv("PWD");
+	new_path = ft_strjoin(temp, cmd);
+	execve(new_path, args, g_shell.env);
+	ft_putstr_fd("Command not found\n", 1);
+}
+
 void	ft_testpaths(char *cmd, char **args, char **paths)
 {
 	int		i;
@@ -17,8 +31,7 @@ void	ft_testpaths(char *cmd, char **args, char **paths)
 		i++;
 	}
 	ft_freecharmatrix(paths);
-	printf("No such command found.\n");
-	exit((0));
+	test_relative_paths(cmd, args);
 }
 
 void	ft_exec(char *cmd, char **args)
@@ -42,21 +55,48 @@ void	ft_exec(char *cmd, char **args)
 	ft_testpaths(cmd, args, paths);
 }
 
-void	do_exeve(char	*cmd, char	**arg)
+void	close_extra_pipes(int **fd, int i, int n_nodes)
 {
-	pid_t pid;
+	int	j;
+
+	j = 0;
+	if (n_nodes > 1)
+	{
+		while (j < n_nodes)
+		{
+			if (j == i)
+				;
+			else if (j == i - 1)
+				close(fd[j][1]);
+			else
+			{
+				close(fd[j][1]);
+				close(fd[j][0]);
+			}
+		j++;
+		}
+	}
+}
+
+void	do_exeve(char	*cmd, char	**arg, int **fd, int *info)
+{
+	pid_t	pid;
 
 	pid = fork();
 	if (pid == 0)
 	{
+		close_extra_pipes(fd, info[0], info[1]);
 		if (cmd[0] == '/')
 		{
 			if (execve(cmd, arg, g_shell.env) == -1)
 				printf("Invalid command address.");
 		}
 		else
+		{
 			ft_exec(cmd, arg);
+			exit(0);
+		}
 	}
 	else
-		waitpid(pid,NULL,0);
+		wait(NULL);
 }

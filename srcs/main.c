@@ -21,6 +21,27 @@ static void	env_error(int error)
 	exit(0);
 }
 
+void	increase_shell_lvl(void)
+{
+	int		i;
+	char	*new_char;
+	int		new_int;
+
+	i = 0;
+	while (g_shell.env[i])
+	{
+		if (ft_strncmp(g_shell.env[i], "SHLVL", 5) == 0)
+		{
+			new_int = ft_atoi(&g_shell.env[i][6]);
+			new_char = ft_itoa(new_int + 1);
+			free(g_shell.env[i]);
+			g_shell.env[i] = ft_strjoin("SHLVL=", new_char);
+			free(new_char);
+		}
+		i++;
+	}
+}
+
 void	init_env(char **envp)
 {
 	int	i;
@@ -41,6 +62,7 @@ void	init_env(char **envp)
 		i++;
 	}
 	g_shell.env[i] = NULL;
+	increase_shell_lvl();
 }
 
 void	print_node(t_node **nodes, char **a)
@@ -80,12 +102,24 @@ void	free_nodes(t_node **node, int size)
 	free(node);
 }
 
+int	is_line_empty(char	*line)
+{
+	int	a;
+	a = 0;
+	while(line[a])
+	{
+		if (line[a] != ' ')
+			return(0);
+		a++;
+	}
+	return (1);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	char		**a;
 	char		*line;
 	t_node		**nodes;
-	int			n_nodes;
 
 	g_shell.exit = 0;
 	nodes = NULL;
@@ -96,16 +130,18 @@ int	main(int argc, char **argv, char **envp)
 	{
 		line = 0;
 		line = rl_w_history("Prompt minishell$ ", line);
-		a = ft_cmdtrim(line, " ");
-		a = ft_subsplit(a);
-		expander(a);
-		remove_quotes(a);
-		nodes = parse(a);
-		n_nodes = count_pipes(a) + 1;
-		executor(nodes, n_nodes);
-		free_nodes(nodes, count_pipes(a));
-		ft_freecharmatrix(a);
-		free(a);
+		if (is_line_empty(line) == 0)
+		{
+			a = ft_cmdtrim(line, " ");
+			a = ft_subsplit(a);
+			expander(a);
+			remove_quotes(a);
+			nodes = parse(a);
+			executor(nodes, count_pipes(a) + 1);
+			free_nodes(nodes, count_pipes(a));
+			ft_freecharmatrix(a);
+			free(a);
+		}
 		free(line);
 	}
 	return (0);

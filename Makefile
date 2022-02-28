@@ -10,6 +10,7 @@ SRC = main.c\
 		parser.c\
 		executor.c\
 		exeve.c\
+		env_utils.c\
 		readline.c
 SRCSFD = srcs/
 OBJSFD = objs/

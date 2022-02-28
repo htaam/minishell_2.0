@@ -47,6 +47,7 @@ char			**matrix_replace_i(char ***big, char **small, int n);
 int				count_pipes(char	**a);
 void			executor(t_node **nodes, int n_nodes);
 void			do_exeve(char	*cmd, char	**arg, int **fd, int *info);
+void			init_env(char **envp);
 /*
 char			*convertocd(char **str);
 

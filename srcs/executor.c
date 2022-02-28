@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int		check_builtin(char	*cmd)
+int	check_builtin(char	*cmd)
 {
 	if (0 == ft_strncmp(cmd, "echo", 4))
 		return (1);
@@ -18,19 +18,19 @@ int		check_builtin(char	*cmd)
 		return (0);
 }
 
-void	do_builtin(char *cmd)
+void	do_builtin(t_node *node)
 {
-	if (0 == ft_strncmp(cmd, "echo", 4))
+	if (0 == ft_strncmp(node->cmd, "echo", 4))
 		printf("do ECHO\n");
-	else if (0 == ft_strncmp(cmd, "export", 6))
+	else if (0 == ft_strncmp(node->cmd, "export", 6))
 		printf("do export\n");
-	else if (0 == ft_strncmp(cmd, "unset", 5))
+	else if (0 == ft_strncmp(node->cmd, "unset", 5))
 		printf("do unset\n");
-	else if (0 == ft_strncmp(cmd, "cd", 2))
+	else if (0 == ft_strncmp(node->cmd, "cd", 2))
 		printf("do cd\n");
-	else if (0 == ft_strncmp(cmd, "pwd", 3))
+	else if (0 == ft_strncmp(node->cmd, "pwd", 3))
 		printf("do pwd\n");
-	else if (0 == ft_strncmp(cmd, "env", 3))
+	else if (0 == ft_strncmp(node->cmd, "env", 3))
 		printf("do env\n");
 }
 
@@ -55,7 +55,7 @@ void	executor_2(t_node *node, int i, int **fd, int n_nodes)
 	if (0 == ft_strncmp(node->cmd, "exit", 4))
 		g_shell.exit = 1;
 	else if (check_builtin(node->cmd) == 1)
-		do_builtin(node->cmd);
+		do_builtin(node);
 	else
 		do_exeve(node->cmd, node->arg, fd, info);
 	dup2(og_zero, 0);

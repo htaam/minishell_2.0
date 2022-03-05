@@ -1,4 +1,4 @@
-#include "libc.h"
+#include "libft.h"
 
 int	ft_char_count(char *str, char c)
 {

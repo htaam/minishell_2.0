@@ -11,7 +11,8 @@ SRC = main.c\
 		executor.c\
 		exeve.c\
 		env_utils.c\
-		readline.c
+		readline.c\
+		quotes_expand.c
 SRCSFD = srcs/
 OBJSFD = objs/
 OBJS = $(addprefix $(OBJSFD),$(SRC:.c=.o))

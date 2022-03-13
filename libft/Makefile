@@ -27,7 +27,6 @@ SRC_NAMES = ft_abs.c\
 				ft_calloc.c\
 				ft_lstmap.c\
 				ft_strdup.c\
-				ft_gnl.c\
 				ft_exit.c\
 				ft_lstnew.c\
 				ft_strjoin.c\

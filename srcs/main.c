@@ -76,6 +76,7 @@ int	main(int argc, char **argv, char **envp)
 			expander(a);
 			remove_quotes(a);
 			nodes = parse(a);
+			//print_node(nodes, a);
 			executor(nodes, count_pipes(a) + 1);
 			free_nodes(nodes, count_pipes(a));
 			ft_freecharmatrix(a);

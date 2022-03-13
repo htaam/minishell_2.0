@@ -79,7 +79,6 @@ int					ft_strncmp(const char *c1, const char *c2, size_t n);
 int					ft_tolower(int c);
 int					ft_toupper(int c);
 int					ft_memdel(void **ptr);
-int					ft_gnl(int fd, char **line);
 int					ft_string_is_positive_number(char *str);
 int					ft_charmatrixlen(char **matrix);
 int					ft_char_count(char *str, char c);

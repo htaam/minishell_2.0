@@ -48,6 +48,9 @@ int				count_pipes(char	**a);
 void			executor(t_node **nodes, int n_nodes);
 void			do_exeve(char	*cmd, char	**arg, int **fd, int *info);
 void			init_env(char **envp);
+char			*do_quotes_expand(char *list);
+char			*do_expand_aux_2(char *list);
+
 /*
 char			*convertocd(char **str);
 

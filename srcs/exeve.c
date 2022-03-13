@@ -8,10 +8,12 @@ void	test_relative_paths(char *cmd, char **args)
 	temp = getenv("PWD");
 	new_path = ft_strjoin(temp, cmd + 1);
 	execve(new_path, args, g_shell.env);
+	free(new_path);
 	temp = getenv("PWD");
 	new_path = ft_strjoin(temp, cmd);
 	execve(new_path, args, g_shell.env);
 	ft_putstr_fd("Command not found\n", 1);
+	free(new_path);	
 	g_shell.exit_status = 1;
 }
 
@@ -26,12 +28,12 @@ void	ft_testpaths(char *cmd, char **args, char **paths)
 	{
 		temp = ft_strjoin(paths[i], "/");
 		newpath = ft_strjoin(temp, cmd);
+		free(temp);
 		execve(newpath, args, g_shell.env);
 		free(newpath);
-		free(temp);
 		i++;
 	}
-	ft_freecharmatrix(paths);
+	ft_free_matrix(&paths);
 	test_relative_paths(cmd, args);
 }
 

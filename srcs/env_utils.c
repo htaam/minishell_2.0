@@ -46,7 +46,7 @@ void	init_env(char **envp)
 	i = 0;
 	while (envp[i])
 		i++;
-	g_shell.env = malloc(sizeof(char *) * i + 1);
+	g_shell.env = malloc(sizeof(char *) * (i + 1));
 	if (!g_shell.env)
 		env_error(0);
 	*g_shell.env = NULL;

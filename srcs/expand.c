@@ -1,15 +1,5 @@
 #include "minishell.h"
 
-void	do_expand_aux(char	**str)
-{
-	char	*temp;
-
-	temp = ft_strjoin(*str, "\"");
-	free(*str);
-	*str = ft_strdup(temp);
-	free(temp);
-}
-
 char	*do_expand_aux_2(char *list)
 {
 	char	*temp;
@@ -21,6 +11,7 @@ char	*do_expand_aux_2(char *list)
 	return (new);
 }
 
+
 char	*do_expand(char *list)
 {
 	char	*new;
@@ -28,7 +19,7 @@ char	*do_expand(char *list)
 	char	*new2;
 
 	if (list[0] == '\"')
-		list[ft_strlen(list) - 1] = '\0';
+		return (do_quotes_expand(list));
 	temp = ft_substr(list, 1 + ft_strchr(list, '$') - list,
 			ft_strlen(list));
 	if (getenv(temp))
@@ -41,10 +32,6 @@ char	*do_expand(char *list)
 		new2 = do_expand_aux_2(list);
 	else
 		new2 = ft_substr(list, 0, ft_strchr(list, '$') - list);
-	if (list[0] == '\"')
-	{
-		do_expand_aux(&new2);
-	}
 	free(temp);
 	return (new2);
 }

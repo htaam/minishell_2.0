@@ -59,7 +59,11 @@ int	main(int argc, char **argv, char **envp)
 	char		**a;
 	char		*line;
 	t_node		**nodes;
+	struct termios term;
 
+	tcgetattr(STDIN_FILENO, &term);
+	term.c_lflag &= ~(ECHOCTL);
+	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	g_shell.exit = 0;
 	nodes = NULL;
 	(void)argc;

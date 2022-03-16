@@ -11,6 +11,7 @@
 # include "libft.h"
 # include <sys/wait.h>
 # include <stdbool.h>
+# include <termios.h>
 
 typedef struct s_shell
 {

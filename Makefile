@@ -35,7 +35,7 @@ all: check_libft $(NAME) $(HDRS)
 	@echo "Compilation successful"
 
 $(NAME): project $(OBJSFD) $(OBJS) $(LIBFT) $(HDRS)
-	@gcc $(CFLAGS) $(OBJS) -lreadline $(LIB_BINARY) -o $@
+	@gcc $(CFLAGS) $(OBJS) -lreadline -L${HOME}/.brew/opt/readline/lib $(LIB_BINARY) -o $@
 	@echo "\t[ \033[0;32m✔\033[0m ] $(NAME) executable"
 
 check_libft:
@@ -50,7 +50,7 @@ $(OBJSFD):
 	@echo "\t[ $(GREEN)✔$(NONE) ] objs/ directory"
 
 $(OBJSFD)%.o: $(SRCSFD)%.c $(HDRS)
-	@gcc $(CFLAGS) $(HDR_INC) $(LIBFT_HDR) -c $< -o $@
+	@gcc $(CFLAGS) $(HDR_INC) $(LIBFT_HDR) -I${HOME}/.brew/opt/readline/include -c $< -o $@
 	@echo "\t[ $(GREEN)✔$(NONE) ] $@ object"
 
 clean:

@@ -1,29 +1,36 @@
 #include "minishell.h"
-/*
-void	int_handler(int signal)
+
+int	check_shell_lvl(void)
 {
-	if (signal == SIGINT)
+	int		i;
+	int		new_int;
+
+	i = 0;
+	while (g_shell.env[i])
 	{
-		printf("\n"); // Move to a new line
-		rl_on_new_line(); // Regenerate the prompt on a newline
-		rl_replace_line("", 0); // Clear the previous text
-		rl_redisplay();
+		if (ft_strncmp(g_shell.env[i], "SHLVL", 5) == 0)
+		{
+			new_int = ft_atoi(&g_shell.env[i][6]);
+			return (new_int);
+		}
+		i++;
 	}
-}*/
+	return (0);
+}
 
 void sig_handler(int signal)
 {
-    {
-    if (signal == SIGINT)
-    {
-        printf("Prompt minishell$ \n");
-    }
-    if (rl_on_new_line() == -1)
-        exit(1);
-    rl_replace_line("", 1);
-    rl_redisplay();
+
+	if (signal == SIGINT)
+	{
+		printf("Prompt minishell$ \n");
+	}
+	if (rl_on_new_line() == -1)
+		exit(1);
+	rl_replace_line("", 1);
+	rl_redisplay();
 }
-}
+
 
 void setting_signal()
 {
@@ -45,7 +52,7 @@ char	*rl_w_history(char *prompt, char *line_read)
 	{
 		printf("\033[1A");
 		printf("\033[10C");
-		printf("\t  exit\n");
+		printf("\t$ exit\n");
 		exit(-1);
 	}
 	else

@@ -22,10 +22,10 @@ char	*do_expand(char *list)
 		return (do_quotes_expand(list));
 	temp = ft_substr(list, 1 + ft_strchr(list, '$') - list,
 			ft_strlen(list));
-	if (getenv(temp))
+	if (my_get_env(temp))
 	{
 		new = ft_substr(list, 0, ft_strchr(list, '$') - list);
-		new2 = ft_strjoin(new, getenv(temp));
+		new2 = ft_strjoin(new, my_get_env(temp));
 		free(new);
 	}
 	else if (ft_strncmp(temp, "?", 1) == 0)

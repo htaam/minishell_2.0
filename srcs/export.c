@@ -77,28 +77,26 @@ void	ordenv(char **env)
 	free(temp);
 }
 
-void	export(char ***envv, char *path)
+void	export(char *path)
 {
-	char	**env;
 	char	**newenv;
 	int		j;
 
 	j = 0;
-	env = &(**envv);
-	newenv = (char **)malloc(sizeof(char *) * (bdstrcount(env) + 2));
+	newenv = (char **)malloc(sizeof(char *) * (bdstrcount(g_shell.env) + 2));
 	if (newenv == NULL)
 		exit(0);
-	while (env[j])
+	while (g_shell.env[j])
 	{
-		newenv[j] = (char *)malloc(sizeof(char) * (ft_strlen(env[j]) + 1));
-		ft_strlcpy(newenv[j], env[j], ft_strlen(env[j]) + 1);
-		free(env[j]);
+		newenv[j] = malloc(sizeof(char) * (ft_strlen(g_shell.env[j]) + 1));
+		ft_strlcpy(newenv[j], g_shell.env[j], ft_strlen(g_shell.env[j]) + 1);
+		free(g_shell.env[j]);
 		j++;
 	}
 	newenv[j] = (char *)malloc(sizeof(char) * (ft_strlen(path) + 1));
 	ft_strlcpy(newenv[j], path, ft_strlen(path) + 1);
 	j++;
 	newenv[j] = NULL;
-	free(env);
-	*envv = newenv;
+	free(g_shell.env);
+	g_shell.env = newenv;
 }

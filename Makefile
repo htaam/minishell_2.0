@@ -12,6 +12,14 @@ SRC = main.c\
 		exeve.c\
 		env_utils.c\
 		readline.c\
+		my_get_env.c\
+		builtins.c\
+        builtinst.c\
+        butils.c\
+        butilst.c\
+        cd.c\
+        cdt.c\
+        export.c\
 		quotes_expand.c
 SRCSFD = srcs/
 OBJSFD = objs/

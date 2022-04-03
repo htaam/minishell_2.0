@@ -12,6 +12,7 @@
 # include <sys/wait.h>
 # include <stdbool.h>
 # include <termios.h>
+# include <dirent.h>
 
 typedef struct s_shell
 {
@@ -51,28 +52,37 @@ void			do_exeve(char	*cmd, char	**arg, int **fd, int *info);
 void			init_env(char **envp);
 char			*do_quotes_expand(char *list);
 char			*do_expand_aux_2(char *list);
+char			*my_get_env(char *s);
 
-/*
-char			*convertocd(char **str);
 
-// Builtins Utils
-int				envpos(char **env, char *path);
-int				clchar(char c, char *str);
-unsigned int	bdstrcount(char **str);
-int				ft_strcmp(const char *s1, const char *s2);
-int				firstequals(char *s1, char *s2);
-void			ft_strcpy(char *dest, char *src);
-void			ordenv(char **env);
-char			*ft_substrsc(char *s, unsigned int start, size_t len);
-void			cdf(char **env, char *initialpath, int oldpwd, int pwdpos);
-int				ft_rstrcmp(const char *s1, const char *s2);
+void            difbuilt(char **argu);
+
+//Builtins Utils
+void            difbuiltt(char **argu);
+int                checkpos(char *str, char c);
+void            convertminmai(char *str, int conv);
+int                envpos(char **env, char *path);
+int                clchar(char c, char *str);
+unsigned int    bdstrcount(char **str);
+int                ft_strcmp(const char *s1, const char *s2);
+int                firstequals(char *s1, char *s2);
+void            ft_strcpy(char *dest, char *src);
+void            ordenv(char **env);
+char            *ft_substrsc(char *s, unsigned int start, size_t len);
+void            cdf(char **env, char *initialpath, int oldpwd, int pwdpos);
+int                ft_rstrcmp(const char *s1, const char *s2);
 
 // Builtins
-void			unsent(char ***envv, char *path);
-void			export(char ***envv, char *path);
-int				pwd(char **env, bool print);
-void			cd(char **env, char *path);
-void			envb(char **env);
-char			*echo(char **env, char *path);
-*/
+void            unsent(char *path);
+void            export(char *path);
+int                pwd(char **env, bool print);
+void            cd(char *path);
+void            envb(char **env);
+char            *echo(char *path);
+void             convertminmai(char *str, int conv);
+
+
+
+
+
 #endif

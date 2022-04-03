@@ -18,22 +18,6 @@ int	check_builtin(char	*cmd)
 		return (0);
 }
 
-void	do_builtin(t_node *node)
-{
-	if (0 == ft_strncmp(node->cmd, "echo", 4))
-		printf("do ECHO\n");
-	else if (0 == ft_strncmp(node->cmd, "export", 6))
-		printf("do export\n");
-	else if (0 == ft_strncmp(node->cmd, "unset", 5))
-		printf("do unset\n");
-	else if (0 == ft_strncmp(node->cmd, "cd", 2))
-		printf("do cd\n");
-	else if (0 == ft_strncmp(node->cmd, "pwd", 3))
-		printf("do pwd\n");
-	else if (0 == ft_strncmp(node->cmd, "env", 3))
-		printf("do env\n");
-}
-
 void	executor_2(t_node *node, int i, int **fd, int n_nodes)
 {
 	int		og_one;
@@ -55,7 +39,7 @@ void	executor_2(t_node *node, int i, int **fd, int n_nodes)
 	if (0 == ft_strncmp(node->cmd, "exit", 4))
 		g_shell.exit = 1;
 	else if (check_builtin(node->cmd) == 1)
-		do_builtin(node);
+		difbuilt(node->arg);
 	else
 		do_exeve(node->cmd, node->arg, fd, info);
 	dup2(og_zero, 0);

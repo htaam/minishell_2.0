@@ -55,8 +55,9 @@ void	cdt(char **env, char *path, int oldpwd, int pwdpos)
 
 	temp = NULL;
 	pdir = NULL;
+	temppwd = NULL;
 	initialpath = ft_strdup(path);
-	temppwd = echo("PWD=");
+	ft_strcpy(temppwd, my_get_env("PWD="));
 	chpath(&temppwd, &path, &pdir);
 	if (!pdir)
 		cdf(env, initialpath, oldpwd, pwdpos);
@@ -76,11 +77,11 @@ void	cdt(char **env, char *path, int oldpwd, int pwdpos)
 
 void	cdextension(char **env, char *temp, int pwdpos, int oldpwdpos)
 {
-	temp = echo("PWD=");
+	ft_strcpy(temp, my_get_env("PWD="));
 	free(env[oldpwdpos]);
 	env[oldpwdpos] = ft_strjoin("OLDPWD=", temp);
 	free(temp);
-	temp = echo("HOME=");
+	ft_strcpy(temp, my_get_env("HOME="));
 	free(env[pwdpos]);
 	env[pwdpos] = ft_strjoin("PWD=", temp);
 	free(temp);
@@ -101,7 +102,7 @@ void	cd(char *path)
 	{
 		if (ft_strcmp(g_shell.env[pwdpos], g_shell.env[homepos]) != 0)
 		{
-			temp = echo("PWD=");
+			ft_strcpy(temp, my_get_env("PWD="));
 			free(g_shell.env[oldpwdpos]);
 			g_shell.env[oldpwdpos] = ft_strjoin("OLDPWD=", temp);
 			free(temp);

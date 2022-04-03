@@ -55,7 +55,8 @@ void	cdf(char **env, char *initialpath, int oldpwd, int pwdpos)
 	char	*tempwd;
 	DIR		*pdir;
 
-	tempwd = echo("PWD=");
+	tempwd = NULL;
+	ft_strcpy(tempwd, my_get_env("PWD="));
 	pdir = opendir(initialpath);
 	if (!pdir)
 		printf("Cannot open directory '%s'\n", initialpath);

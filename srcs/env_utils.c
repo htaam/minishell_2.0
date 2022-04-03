@@ -27,7 +27,7 @@ void	increase_shell_lvl(void)
 	i = 0;
 	while (g_shell.env[i])
 	{
-		if (ft_strncmp(g_shell.env[i], "SHLVL", 5) == 0)
+		if (ft_strncmp(g_shell.env[i], "SHLVL=", 6) == 0)
 		{
 			new_int = ft_atoi(&g_shell.env[i][6]);
 			new_char = ft_itoa(new_int + 1);

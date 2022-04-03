@@ -5,11 +5,11 @@ void	test_relative_paths(char *cmd, char **args)
 	char	*temp;
 	char	*new_path;
 
-	temp = getenv("PWD");
+	temp = my_get_env("PWD");
 	new_path = ft_strjoin(temp, cmd + 1);
 	execve(new_path, args, g_shell.env);
 	free(new_path);
-	temp = getenv("PWD");
+	temp = my_get_env("PWD");
 	new_path = ft_strjoin(temp, cmd);
 	execve(new_path, args, g_shell.env);
 	ft_putstr_fd("Command not found\n", 1);

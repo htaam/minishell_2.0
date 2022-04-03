@@ -14,6 +14,10 @@
 # include <termios.h>
 # include <dirent.h>
 
+# ifndef getenv
+#  define getenv = my_get_env
+# endif
+
 typedef struct s_shell
 {
 	char		**env;

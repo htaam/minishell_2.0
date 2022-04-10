@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtins.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmatias <tmatias@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/10 16:34:07 by tmatias           #+#    #+#             */
+/*   Updated: 2022/04/10 16:40:57 by tmatias          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	unsentext(char *env, char **newenv, char *path, int *i)
@@ -66,7 +78,7 @@ char	*echo(char *path)
 	{
 		if (firstequals(g_shell.env[i], path) == ft_strlen(path))
 			ft_strlcpy(save, g_shell.env[i] + pathlen,
-			ft_strlen(g_shell.env[i]) - pathlen + 1);
+				ft_strlen(g_shell.env[i]) - pathlen + 1);
 		i++;
 	}
 	if (ft_strlen(save) > 0)

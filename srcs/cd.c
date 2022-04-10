@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cd.c                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmatias <tmatias@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/10 16:34:52 by tmatias           #+#    #+#             */
+/*   Updated: 2022/04/10 16:42:02 by tmatias          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	chpathextension(char *temp, char *tempt, char **temppwd, DIR **pdir)
@@ -19,6 +31,9 @@ void	chpathextension(char *temp, char *tempt, char **temppwd, DIR **pdir)
 	free(tempt);
 }
 
+//Create function to remove "./" from path when have no "."
+//before "./" and "/" from end of path;
+
 void	chpath(char **temppwd, char **path, DIR **pdir)
 {
 	char	*temp;
@@ -32,7 +47,7 @@ void	chpath(char **temppwd, char **path, DIR **pdir)
 		if (ft_strcmp("/", (*temppwd)) != 0)
 			ft_strlcpy((*temppwd), (*temppwd), clchar('/', (*temppwd)) + 1);
 	}
-	if (firstequals((*path), ".") == 2)
+	if (firstequals((*path), "..") == 2)
 		(*path) = ft_substrsc((*path), 2, ft_strlen((*path)));
 	else if (firstequals((*path), ".") == 1)
 		(*path) = ft_substrsc((*path), 1, ft_strlen((*path)));
@@ -55,15 +70,14 @@ void	cdt(char **env, char *path, int oldpwd, int pwdpos)
 
 	temp = NULL;
 	pdir = NULL;
-	temppwd = NULL;
 	initialpath = ft_strdup(path);
-	ft_strcpy(temppwd, my_get_env("PWD="));
+	temppwd = ft_strdup(my_get_env("PWD"));
 	chpath(&temppwd, &path, &pdir);
 	if (!pdir)
 		cdf(env, initialpath, oldpwd, pwdpos);
 	else
 	{
-		temp = echo("PWD=");
+		temp = ft_strdup(my_get_env("PWD"));
 		free(env[oldpwd]);
 		env[oldpwd] = ft_strjoin("OLDPWD=", temp);
 		free(env[pwdpos]);
@@ -77,11 +91,11 @@ void	cdt(char **env, char *path, int oldpwd, int pwdpos)
 
 void	cdextension(char **env, char *temp, int pwdpos, int oldpwdpos)
 {
-	ft_strcpy(temp, my_get_env("PWD="));
+	temp = ft_strdup(my_get_env("PWD"));
 	free(env[oldpwdpos]);
 	env[oldpwdpos] = ft_strjoin("OLDPWD=", temp);
 	free(temp);
-	ft_strcpy(temp, my_get_env("HOME="));
+	temp = ft_strdup(my_get_env("HOME"));
 	free(env[pwdpos]);
 	env[pwdpos] = ft_strjoin("PWD=", temp);
 	free(temp);
@@ -94,20 +108,20 @@ void	cd(char *path)
 	int		homepos;
 	char	*temp;
 
-	homepos = envpos(g_shell.env, "HOME=");
-	pwdpos = envpos(g_shell.env, "PWD=");
-	oldpwdpos = envpos(g_shell.env, "OLDPWD=");
 	temp = NULL;
+	homepos = my_get_pos("HOME");
+	pwdpos = my_get_pos("PWD");
+	oldpwdpos = my_get_pos("OLDPWD");
 	if (ft_strcmp("..", path) == 0)
 	{
 		if (ft_strcmp(g_shell.env[pwdpos], g_shell.env[homepos]) != 0)
 		{
-			ft_strcpy(temp, my_get_env("PWD="));
+			temp = ft_strdup(my_get_env("PWD"));
 			free(g_shell.env[oldpwdpos]);
 			g_shell.env[oldpwdpos] = ft_strjoin("OLDPWD=", temp);
 			free(temp);
 			ft_strlcpy(g_shell.env[pwdpos], g_shell.env[pwdpos],
-			clchar('/', g_shell.env[pwdpos]) + 1);
+				clchar('/', g_shell.env[pwdpos]) + 1);
 		}
 	}
 	else if (ft_strlen(path) == 0 || path == NULL)

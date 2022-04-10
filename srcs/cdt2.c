@@ -1,25 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memdel.c                                        :+:      :+:    :+:   */
+/*   cdt2.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmatias <tmatias@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/10 16:31:56 by tmatias           #+#    #+#             */
-/*   Updated: 2022/04/10 16:31:57 by tmatias          ###   ########.fr       */
+/*   Created: 2022/04/10 16:50:24 by tmatias           #+#    #+#             */
+/*   Updated: 2022/04/10 16:50:37 by tmatias          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-int	ft_memdel(void **ptr)
+int	ft_rstrcmp(const char *s1, const char *s2)
 {
-	if (*ptr)
+	int	i;
+
+	i = 0;
+	while ((s1[i] != '\0' || s2[i] != '\0'))
 	{
-		ft_memset(*ptr, 0, ft_strlen(*ptr));
-		free(*ptr);
-		*ptr = 0;
-		return (1);
+		if (s1[i] != s2[i])
+			return (s1[i] - s2[i]);
+		i++;
 	}
 	return (0);
+}
+
+int	lencalc(char *s, int start)
+{
+	int	len;
+
+	len = ft_strlen(s) - start;
+	if (len < 0)
+		len = 0;
+	return (len);
 }

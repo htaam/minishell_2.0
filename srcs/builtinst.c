@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtinst.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmatias <tmatias@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/10 16:34:17 by tmatias           #+#    #+#             */
+/*   Updated: 2022/04/10 16:42:38 by tmatias          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	whileco(char **argu, int pos)
@@ -21,23 +33,27 @@ void	whileco(char **argu, int pos)
 		}
 		else
 			printf("%s", argu[pos]);
-		if (pos != sizearg)
+		if (pos < sizearg - 1)
 			printf(" ");
 		pos++;
 	}
 }
 
-void	whileexport(char **argu)
+void	tryexport(char *path)
 {
-	int	i;
+	int		pos;
+	char	*novo;
 
-	i = 1;
-	while (argu[i])
+	pos = checkpos(path, '=');
+	novo = ft_substr(path, 0, pos);
+	if (my_get_env(novo) != NULL)
 	{
-		if (checkpos(argu[i], '=') != ft_strlen(argu[i]))
-			export(argu[i]);
-		i++;
+		unsent(novo);
+		export(path);
 	}
+	else
+		export(path);
+	free(novo);
 }
 
 void	whileunset(char **argu)
@@ -53,7 +69,7 @@ void	whileunset(char **argu)
 	}
 }
 
-void 	difbuiltt(char **argu)
+void	difbuiltt(char **argu)
 {
 	if (ft_strncmp(argu[0], "pwd", 3) == 0)
 	{
@@ -61,11 +77,12 @@ void 	difbuiltt(char **argu)
 	}
 	else if (ft_strncmp(argu[0], "env", 3) == 0)
 		envb(g_shell.env);
+	else if (ft_strncmp(argu[0], "cd", 2) == 0)
+		cdv("");
 }
 
 void	difbuilt(char **argu)
 {
-
 	convertminmai(argu[0], 0);
 	if (bdstrcount(argu) > 1)
 	{
@@ -84,7 +101,7 @@ void	difbuilt(char **argu)
 		else if (ft_strncmp(argu[0], "unset", 5) == 0)
 			whileunset(argu);
 		else if (ft_strncmp(argu[0], "cd", 2) == 0)
-			cd(argu[1]);
+			cdv(argu[1]);
 	}
 	else
 		difbuiltt(argu);

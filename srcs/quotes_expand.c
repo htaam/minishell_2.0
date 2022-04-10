@@ -1,5 +1,16 @@
-#include "minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   quotes_expand.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmatias <tmatias@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/10 16:37:29 by tmatias           #+#    #+#             */
+/*   Updated: 2022/04/10 16:37:42 by tmatias          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "minishell.h"
 
 void	do_expand_aux(char	**str)
 {
@@ -10,6 +21,7 @@ void	do_expand_aux(char	**str)
 	*str = ft_strdup(temp);
 	free(temp);
 }
+
 char	*do_expand2(char *list)
 {
 	char	*new;
@@ -36,7 +48,7 @@ char	*reform_str(char	**a)
 {
 	char	*str;
 	int		i;
-	char 	*temp;
+	char	*temp;
 	char	*temp2;
 
 	i = 0;

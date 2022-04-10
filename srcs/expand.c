@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expand.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmatias <tmatias@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/10 16:35:52 by tmatias           #+#    #+#             */
+/*   Updated: 2022/04/10 16:35:55 by tmatias          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 char	*do_expand_aux_2(char *list)
@@ -10,7 +22,6 @@ char	*do_expand_aux_2(char *list)
 	free(temp);
 	return (new);
 }
-
 
 char	*do_expand(char *list)
 {

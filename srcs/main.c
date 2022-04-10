@@ -1,29 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmatias <tmatias@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/10 16:36:09 by tmatias           #+#    #+#             */
+/*   Updated: 2022/04/10 16:59:58 by tmatias          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 /* global variable declaration */
 t_shell	g_shell;
-
-void	print_node(t_node **nodes, char **a)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i <= count_pipes(a))
-	{
-		printf("cmd[%d] > %s\n", i, nodes[i]->cmd);
-		printf("in_file[%d] > %d\n", i, nodes[i]->in_file);
-		printf("out_file[%d] > %d\n", i, nodes[i]->out_file);
-		j = 0;
-		while ((nodes[i]->arg[j]))
-		{
-			printf("arg[%d] > %s\n", j, nodes[i]->arg[j]);
-			j++;
-		}
-		printf("\n");
-		i++;
-	}
-}
 
 void	free_nodes(t_node **node, int size)
 {
@@ -43,29 +33,39 @@ void	free_nodes(t_node **node, int size)
 int	is_line_empty(char	*line)
 {
 	int	a;
-	a = 0;
 
-	while(line[a])
+	a = 0;
+	while (line[a])
 	{
-		if (line[a]!= ' ')
-			return(0);
+		if (line[a] != ' ')
+			return (0);
 		a++;
 	}
 	return (1);
 }
 
+void	do_stuff(char **a)
+{
+	t_node	**nodes;
+
+	nodes = NULL;
+	expander(a);
+	remove_quotes(a);
+	nodes = parse(a);
+	executor(nodes, count_pipes(a) + 1);
+	free_nodes(nodes, count_pipes(a));
+}
+
 int	main(int argc, char **argv, char **envp)
 {
-	char		**a;
-	char		*line;
-	t_node		**nodes;
-	struct termios term;
+	char			**a;
+	char			*line;
+	struct termios	term;
 
 	tcgetattr(STDIN_FILENO, &term);
 	term.c_lflag &= ~(ECHOCTL);
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	g_shell.exit = 0;
-	nodes = NULL;
 	(void)argc;
 	(void)argv;
 	init_env(envp);
@@ -77,16 +77,10 @@ int	main(int argc, char **argv, char **envp)
 		{
 			a = ft_cmdtrim(line, " ");
 			a = ft_subsplit(a);
-			expander(a);
-			remove_quotes(a);
-			nodes = parse(a);
-			//print_node(nodes, a);
-			executor(nodes, count_pipes(a) + 1);
-			free_nodes(nodes, count_pipes(a));
+			do_stuff(a);
 			ft_freecharmatrix(a);
 			free(a);
 		}
 		free(line);
 	}
-	return (0);
 }

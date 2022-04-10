@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   readline.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmatias <tmatias@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/10 16:37:44 by tmatias           #+#    #+#             */
+/*   Updated: 2022/04/10 16:38:19 by tmatias          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	check_shell_lvl(void)
@@ -18,9 +30,8 @@ int	check_shell_lvl(void)
 	return (0);
 }
 
-void sig_handler(int signal)
+void	sig_handler(int signal)
 {
-
 	if (signal == SIGINT)
 	{
 		printf("Prompt minishell$ \n");
@@ -31,11 +42,19 @@ void sig_handler(int signal)
 	rl_redisplay();
 }
 
-
-void setting_signal()
+void	sig_handle2(int signal)
 {
-    signal(SIGINT, sig_handler);  // CTRL + C
-    signal(SIGQUIT, SIG_IGN); // CTRL + /
+	if (signal == SIGQUIT)
+	{
+		printf("^\\Quit: 3\n");
+		exit (0);
+	}
+}
+
+void	setting_signal(void)
+{
+	signal(SIGINT, sig_handler);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 char	*rl_w_history(char *prompt, char *line_read)
@@ -45,7 +64,6 @@ char	*rl_w_history(char *prompt, char *line_read)
 		free (line_read);
 		line_read = (char *) NULL;
 	}
-
 	setting_signal();
 	line_read = readline (prompt);
 	if (!line_read)

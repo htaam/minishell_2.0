@@ -3,6 +3,7 @@ NAME = minishell
 CFLAGS = -Wall -Wextra -Werror 
 
 SRC = main.c\
+		util_one.c\
 		trim.c\
 		expand.c\
 		subsplit.c\
@@ -19,6 +20,7 @@ SRC = main.c\
         butilst.c\
         cd.c\
         cdt.c\
+		cdt2.c\
         export.c\
 		quotes_expand.c
 SRCSFD = srcs/
